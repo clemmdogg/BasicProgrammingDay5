@@ -188,7 +188,7 @@ namespace BasicProgrammingDay5.Exercises
             List<Person> filteredPhoneBook = [];
             foreach (Person person in phoneBook)
             {
-                if (person.FirstName.Contains(userFirstNameInput))
+                if (person.FirstName.ToLower().Contains(userFirstNameInput.ToLower()))
                 {
                     filteredPhoneBook.Add(person);
                 }
@@ -200,7 +200,7 @@ namespace BasicProgrammingDay5.Exercises
             List<Person> filteredPhoneBook = [];
             foreach (Person person in phoneBook)
             {
-                if (person.LastName.Contains(userLastNameInput))
+                if (person.LastName.ToLower().Contains(userLastNameInput.ToLower()))
                 {
                     filteredPhoneBook.Add(person);
                 }
