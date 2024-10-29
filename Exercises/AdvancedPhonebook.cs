@@ -35,10 +35,16 @@ namespace BasicProgrammingDay5.Exercises
                 PhoneNumber = phoneNumber;
             }
         }
+        /// <summary>
+        /// Runs the whole program.
+        /// </summary>
         public static void RunPhoneBookProgram()
         {
             PhonebookMenu();
         }
+        /// <summary>
+        /// Runs the menu with the method with all the methods included.
+        /// </summary>
         public static void PhonebookMenu()
         {
             bool isUserQuittingMenu = false;
@@ -78,12 +84,18 @@ namespace BasicProgrammingDay5.Exercises
             Console.WriteLine("Halløj tak fordi du brugte den advancerede telefonbog. Farvel!!");
             Console.ReadKey();
         }
+        /// <summary>
+        /// Collects the data from user inputs to create a new person and add it to phone book.
+        /// </summary>
         public static void AddNewPersonToPhoneBook()
         {
             List<Person> phoneBook = DeserializePersons();
             phoneBook.Add(GetNewPerson(phoneBook));
             SerializePersons(phoneBook);
         }
+        /// <summary>
+        /// Collects a Person ID from the user to delete the person tied to the Person ID.
+        /// </summary>
         public static void DeletePersonInPhoneBook()
         {
             List<Person> phoneBook = DeserializePersons();
@@ -103,6 +115,9 @@ namespace BasicProgrammingDay5.Exercises
             }
            
         }
+        /// <summary>
+        /// Is running a search menu associated to the phone book, that also runs all the methods inside, when something is selected.
+        /// </summary>
         public static void SearchMenuPhoneBook()
         {
             bool isUserQuittingMenu = false;
@@ -183,6 +198,12 @@ namespace BasicProgrammingDay5.Exercises
                 }
             }
         }
+        /// <summary>
+        /// Takes phoneBook input and the userFirstNameInput and finds all the persons with the userFirstNameInput string in their first name.
+        /// </summary>
+        /// <param name="phoneBook"></param>
+        /// <param name="userFirstNameInput"></param>
+        /// <returns></returns>
         public static List<Person> FilterFirstName(List<Person> phoneBook, string userFirstNameInput)
         {
             List<Person> filteredPhoneBook = [];
@@ -195,6 +216,12 @@ namespace BasicProgrammingDay5.Exercises
             }
             return filteredPhoneBook;
         }
+        /// <summary>
+        /// Takes phoneBook input and the userLastNameInput and finds all the persons with the userLastNameInput string in their last name.
+        /// </summary>
+        /// <param name="phoneBook"></param>
+        /// <param name="userLastNameInput"></param>
+        /// <returns></returns>
         public static List<Person> FilterLastName(List<Person> phoneBook, string userLastNameInput)
         {
             List<Person> filteredPhoneBook = [];
@@ -207,18 +234,28 @@ namespace BasicProgrammingDay5.Exercises
             }
             return filteredPhoneBook;
         }
-        public static List<Person> FilterTelephoneNumber(List<Person> phoneBook, int userLastNameInput)
+        /// <summary>
+        /// Takes phoneBook input and the userTelephoneNumberInput and finds all the persons with the userTelephoneNumberInput int matching their telephone number.
+        /// </summary>
+        /// <param name="phoneBook"></param>
+        /// <param name="userTelephoneNumberInput"></param>
+        /// <returns></returns>
+        public static List<Person> FilterTelephoneNumber(List<Person> phoneBook, int userTelephoneNumberInput)
         {
             List<Person> filteredPhoneBook = [];
             foreach (Person person in phoneBook)
             {
-                if (person.PhoneNumber.ToString().Contains(userLastNameInput.ToString()))
+                if (person.PhoneNumber.ToString().Contains(userTelephoneNumberInput.ToString()))
                 {
                     filteredPhoneBook.Add(person);
                 }
             }
             return filteredPhoneBook;
         }
+        /// <summary>
+        /// Prints the phoneBook list (list of persons) out with 10 per page and writing how many pages.
+        /// </summary>
+        /// <param name="phoneBook"></param>
         public static void ShowPhoneBook(List<Person> phoneBook)
         {
             int counter = 0;
@@ -249,6 +286,10 @@ namespace BasicProgrammingDay5.Exercises
                 counter++;
             }
         }
+        /// <summary>
+        /// Collects the person ID input from user.
+        /// </summary>
+        /// <returns></returns>
         public static int GetPersonIDInput()
         {
             int userInput = 0;
@@ -269,6 +310,11 @@ namespace BasicProgrammingDay5.Exercises
             }
             return userInput;
         }
+        /// <summary>
+        /// Collects inputs from user to create new person. It takes the parameter phoneBook to create the PersonID and it returns a new person.
+        /// </summary>
+        /// <param name="phoneBook"></param>
+        /// <returns></returns>
         public static Person GetNewPerson(List<Person> phoneBook)
         {
             int personID;
@@ -382,6 +428,10 @@ namespace BasicProgrammingDay5.Exercises
             }
             return userInput;
         }
+        /// <summary>
+        /// Collects email input from user and returns it.
+        /// </summary>
+        /// <returns></returns>
         public static string GetEmailInput()
         {
             string userInputEmail = "";
@@ -403,6 +453,11 @@ namespace BasicProgrammingDay5.Exercises
             }
             return userInputEmail;
         }
+        /// <summary>
+        /// Returns a boolean whether the email input is valid or not.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public static bool IsEmailValid(string email)
         {
             if (email.Contains('@'))
@@ -432,11 +487,19 @@ namespace BasicProgrammingDay5.Exercises
             }
             return false;
         }
+        /// <summary>
+        /// Save list of persons to the phone book file.
+        /// </summary>
+        /// <param name="persons"></param>
         public static void SerializePersons(List<Person> persons)
         {
             string jsonString = JsonSerializer.Serialize(persons, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText("phoneBook.json", jsonString);
         }
+        /// <summary>
+        /// Loads list of persons from the phone book file.
+        /// </summary>
+        /// <returns></returns>
         static List<Person> DeserializePersons()
         {
             string jsonString = File.ReadAllText("phoneBook.json");
