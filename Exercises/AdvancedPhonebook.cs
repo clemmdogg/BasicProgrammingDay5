@@ -259,11 +259,11 @@ namespace BasicProgrammingDay5.Exercises
         public static void ShowPhoneBook(List<Person> phoneBook)
         {
             int counter = 0;
-            int numberOfPagesCounter = -1;
+            int numberOfPagesCounter = 0;
             int numberOfPersonsPerPage = NumberOfPersonsPerPageInput();
             List<Person> sortedByLastNameThenFirstName = phoneBook.OrderBy(person => person.LastName).ThenBy(person => person.FirstName).ToList();
-            double pages = sortedByLastNameThenFirstName.Count / numberOfPersonsPerPage;
-            int numberOfPages = (int) Math.Ceiling(pages);
+            double pages = (double) sortedByLastNameThenFirstName.Count / (double) numberOfPersonsPerPage;
+            int numberOfPages = (int)Math.Ceiling(pages);
             foreach (Person person in sortedByLastNameThenFirstName)
             {
                 if (counter % numberOfPersonsPerPage == 0)
@@ -272,7 +272,7 @@ namespace BasicProgrammingDay5.Exercises
                     numberOfPagesCounter++;
                 }
                 Console.WriteLine($"Navn: {person.LastName}, {person.FirstName}\tPerson ID: {person.PersonID}\tEmail: {person.PhoneNumber}\tTelefonnummer: {person.Email}");
-                if (counter + 1 == sortedByLastNameThenFirstName.Count)
+                if (counter + 1 == sortedByLastNameThenFirstName.Count && sortedByLastNameThenFirstName.Count % numberOfPersonsPerPage != 0)
                 {
                     for (int i = 0; i < numberOfPersonsPerPage - ((counter + 1) % numberOfPersonsPerPage); i++)
                     {
@@ -281,7 +281,7 @@ namespace BasicProgrammingDay5.Exercises
                 }
                 if (counter % numberOfPersonsPerPage == numberOfPersonsPerPage - 1 || counter + 1 == sortedByLastNameThenFirstName.Count)
                 {
-                    Console.WriteLine($"\t \t \t \t \t \t \t \t \t SIDE {numberOfPagesCounter +1 } / {numberOfPages + 1 }");
+                    Console.WriteLine($"\t \t \t \t \t \t \t \t \t SIDE {numberOfPagesCounter} / {numberOfPages}");
                     Console.ReadKey();
                 }
                 counter++;
