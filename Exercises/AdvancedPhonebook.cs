@@ -259,28 +259,29 @@ namespace BasicProgrammingDay5.Exercises
         public static void ShowPhoneBook(List<Person> phoneBook)
         {
             int counter = 0;
-            int tenCounter = -1;
+            int numberOfPagesCounter = -1;
+            int numberOfPersonsPerPage = NumberOfPersonsPerPageInput();
             List<Person> sortedByLastNameThenFirstName = phoneBook.OrderBy(person => person.LastName).ThenBy(person => person.FirstName).ToList();
-            double pages = sortedByLastNameThenFirstName.Count / 10;
+            double pages = sortedByLastNameThenFirstName.Count / numberOfPersonsPerPage;
             int numberOfPages = (int) Math.Ceiling(pages);
             foreach (Person person in sortedByLastNameThenFirstName)
             {
-                if (counter % 10 == 0)
+                if (counter % numberOfPersonsPerPage == 0)
                 {
                     Console.Clear();
-                    tenCounter++;
+                    numberOfPagesCounter++;
                 }
                 Console.WriteLine($"Navn: {person.LastName}, {person.FirstName}\tPerson ID: {person.PersonID}\tEmail: {person.PhoneNumber}\tTelefonnummer: {person.Email}");
                 if (counter + 1 == sortedByLastNameThenFirstName.Count)
                 {
-                    for (int i = 0; i <= 10 - ((counter + 1) % 10); i++)
+                    for (int i = 0; i < numberOfPersonsPerPage - ((counter + 1) % numberOfPersonsPerPage); i++)
                     {
                         Console.WriteLine();
                     }
                 }
-                if (counter % 10 == 9 || counter + 1 == sortedByLastNameThenFirstName.Count)
+                if (counter % numberOfPersonsPerPage == numberOfPersonsPerPage - 1 || counter + 1 == sortedByLastNameThenFirstName.Count)
                 {
-                    Console.WriteLine($"\t \t \t \t \t \t \t \t \t SIDE {tenCounter +1 } / {numberOfPages + 1 }");
+                    Console.WriteLine($"\t \t \t \t \t \t \t \t \t SIDE {numberOfPagesCounter +1 } / {numberOfPages + 1 }");
                     Console.ReadKey();
                 }
                 counter++;
@@ -486,6 +487,33 @@ namespace BasicProgrammingDay5.Exercises
                 }
             }
             return false;
+        }
+        /// <summary>
+        /// Return an int from users input to how many persons is to be shown on one page.
+        /// </summary>
+        /// <returns></returns>
+        public static int NumberOfPersonsPerPageInput()
+        {
+            int numberOfPersonsPerPageInput = 10;
+            while (true)
+            {
+                Console.Clear();
+                Console.Write("Indtast hvor mange personer, du vil have per side: ");
+                if (!int.TryParse(Console.ReadLine(), out numberOfPersonsPerPageInput))
+                {
+                    Console.WriteLine("Dette er ikke et tal. Prøv igen!!");
+                    Console.ReadKey();
+                    continue;
+                }
+                if (numberOfPersonsPerPageInput < 2 || numberOfPersonsPerPageInput > 25)
+                {
+                    Console.WriteLine("Tallet skal være mellem 2 og 25. Prøv igen!!");
+                    Console.ReadKey();
+                    continue;
+                }
+                break;
+            }
+            return numberOfPersonsPerPageInput;
         }
         /// <summary>
         /// Save list of persons to the phone book file.
