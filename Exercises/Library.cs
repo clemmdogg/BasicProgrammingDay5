@@ -56,6 +56,8 @@ namespace BasicProgrammingDay5.Exercises
                         {
                             Console.WriteLine("Du er nu logget på!!");
                             Console.ReadKey();
+                            // users.Add(LibraryMenu(user));
+                            // SerializeUsers(users);
                         }
                         else
                         {
@@ -98,7 +100,11 @@ namespace BasicProgrammingDay5.Exercises
                 }
             }
         }
-
+        public static User LibraryMenu(User user)
+        {
+            Console.WriteLine("");
+            return user;
+        }
         public static User CreateNewUser(string email)
         {
             User newUser = new User(
